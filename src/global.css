@@ -1,0 +1,24 @@
+:root{
+    --white:#fff;
+    --ghrey-100: #e1e1e6;
+    --ghrey-300: #c4c4cc;
+    --ghrey-400: #8d8d99;
+    --ghrey-600: #323238;
+    --ghrey-700: #e1e1e6;
+    --ghrey-800: #202024;
+    --ghrey-900: #121214;
+
+    --green-500: #00875f;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: var(--ghrey-900);
+    color: var(--grey-300);
+    -webkit-font-smothing: antialiased;
+}
