@@ -1,12 +1,14 @@
 import styles from './Post.module.css';
+import ptBR from 'date-fns/locale/pt-BR';
 import { Comment } from './Comment';
+import { format, formatDistanceToNow } from 'date-fns';
 
-//author: {avatarUrl: "", nome: "", cargo:""}
-//dataPublicacao: Date
-//content: string
-
-export function Post({author}){
-    
+export function Post({author, dataPublicacao, content}){
+    const dataFormatada = format(dataPublicacao, "d 'de' LLLL 'às' HH:mm'h' ", {locale: ptBR});
+    const dataRelativaAoPost = formatDistanceToNow(dataPublicacao, {
+        locale: ptBR,
+        addSuffix: true
+    })
     return(
         <article className={styles.post}>
             <header>
@@ -20,16 +22,19 @@ export function Post({author}){
                         <span>Web Developer</span>
                     </div>
                 </div>
-                <time title="10 de setembro às 09:44h" dateTime="2024/09/10 09:44:00">Publicado à 1h</time>
+                <time title={dataFormatada} dateTime={dataPublicacao.toISOString()}>{dataRelativaAoPost}</time>
             </header>
             <div className={styles.content}>
-                <p>Fala Galera!!</p>
-                <p>Amanhã teremos viagem a bienal</p>
-                <p>
-                    <a href="#">#bienaldolivro</a>{''}
-                    <a href="#">#eteccidadedolivro</a>{''}
-                    <a href="#">#vempraetec </a>{''}
-                </p>
+                {
+                    content.map(line => {
+                        if (line.type === 'paragraph'){
+                            return<p>{line.content}</p>;
+                        }
+                        else if (line.type === 'link') {
+                            return <p><a href="#">{line.content}</a></p>
+                        }
+                    })
+                }
             </div>
 
             <form className={styles.commentForm}>
